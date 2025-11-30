@@ -1,13 +1,14 @@
---[[
+--[=[
+    @class AssetLoader
 	AssetLoader 모듈은 이미지 에셋의 로딩과 언로딩을 소비자 수 기반으로 관리합니다.
 	여러 AssetLoader 인스턴스가 동일한 이미지 에셋을 참조할 수 있으며,
 	전체 소비자 수에 따라 실제 이미지 로딩(ImageLabel 생성) 및 해제(ImageLabel 파괴)가 이루어집니다.
-]]
+]=]
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
-local Maid = require("../roblox_packages/Maid") -- Maid 모듈의 경로를 알맞게 수정해주세요.
+local Maid = require("./roblox_packages/Maid") 
 
 local imageLayerCollector = Instance.new("ScreenGui") do
 	imageLayerCollector.DisplayOrder = -2^31
