@@ -24,7 +24,7 @@ default = "https://github.com/pesde-pkg/index"
 default = "https://github.com/UpliftGames/wally-index"
 
 [dependencies]
-Maid = { repo = "Story-Bakery/Maid", rev = "main" }
+Maid = { repo = "StoryBakery/Maid", rev = "main" }
 
 [scripts]
 roblox_sync_config_generator = ".pesde/scripts/roblox_sync_config_generator.luau"
