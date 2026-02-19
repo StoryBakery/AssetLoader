@@ -8,10 +8,11 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
-local Maid = require("./roblox_packages/Maid") 
+local Maid = require("./roblox_packages/Maid")
 
-local imageLayerCollector = Instance.new("ScreenGui") do
-	imageLayerCollector.DisplayOrder = -2^31
+local imageLayerCollector = Instance.new("ScreenGui")
+do
+	imageLayerCollector.DisplayOrder = -2 ^ 31
 	imageLayerCollector.IgnoreGuiInset = true
 end
 
@@ -48,14 +49,12 @@ local function unloadImageGlobally(imageId: string)
 	loadedImageLabelsById[imageId] = nil
 end
 
---#region Constructors
-
-export type AssetLoader = typeof(setmetatable({} :: {
+export type AssetLoader = setmetatable<{
 	IsDestroyed: boolean,
 	Maid: Maid.Maid,
-	
-	ImageIdSet: {[string]: true},
-}, AssetLoader))
+
+	ImageIdSet: { [string]: true },
+}, typeof(AssetLoader)>
 
 export type AssetLoaderParams = {
 	ImageIds: { string }?,
@@ -73,8 +72,6 @@ function AssetLoader.new(params: AssetLoaderParams?): AssetLoader
 
 	return self
 end
-
---#region Methods
 
 -- AssetLoader 인스턴스를 파괴하고, 관리하던 모든 이미지의 소비자 수를 감소시킵니다.
 function AssetLoader:Destroy()
@@ -120,7 +117,7 @@ function AssetLoader:LoadImageIds(imageIds: { string })
 	if self.IsDestroyed then
 		return
 	end
-	
+
 	for _, imageId in ipairs(imageIds) do
 		self:LoadImageId(imageId)
 	end
@@ -131,7 +128,7 @@ function AssetLoader:UnloadImageId(imageId: string)
 	if self.IsDestroyed then
 		return
 	end
-	
+
 	if not self.ImageIdSet[imageId] then
 		return
 	end
@@ -143,7 +140,7 @@ function AssetLoader:UnloadImageId(imageId: string)
 		consumerCountsByAssetId[imageId] = currentGlobalConsumers - 1
 		if consumerCountsByAssetId[imageId] <= 0 then
 			unloadImageGlobally(imageId)
-			consumerCountsByAssetId[imageId] = nil 
+			consumerCountsByAssetId[imageId] = nil
 		end
 	end
 end
@@ -159,4 +156,3 @@ function AssetLoader:UnloadImageIds(imageIds: { string })
 end
 
 return AssetLoader
-
